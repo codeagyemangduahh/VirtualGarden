@@ -1,0 +1,63 @@
+@model PlantViewModel
+
+@{
+    ViewBag.Title = "Add Plant";
+
+    ViewBag.GetActive = new Func<string, string>(page => page == "Gardens" ? "active" : "");
+    string action = Model is null ? "Add" : "Update";
+    string button = Model is null ? "Add Plant" : "Update Plant";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+<script type="text/javascript">
+    var fileInput = document.querySelector('.picinput');
+    fileInput.addEventListener('change', (e) => previewImage(e, 'plantpic'));
+</script>
+}
+
+<div class="d-flex flex-column w-100">
+    <h3 class="text-center mb-4">Add a Plant and let's track its growth</h3>
+    <div class="d-flex justify-content-center">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <form asp-controller="Plants" asp-action="@action" method="post" enctype="multipart/form-data" class="w-50 mx-auto">
+        <div class="d-flex w-100 justify-content-center mt-4">
+            <div class="w-50">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea cols="5" asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Species" class="form-label"></label>
+                    <input asp-for="Species" class="form-control" />
+                    <span asp-validation-for="Species" class="text-danger"></span>
+                </div>
+
+                <input type="hidden" asp-for="GardenId" />
+
+                <button type="submit" class="btn btn-primary">@button</button>
+            </div>
+            <div class="d-flex flex-column align-items-center ms-4">
+                <label asp-for="PlantImage"
+                    class="d-flex flex-column justify-content-center align-items-center ms-3 border rounded mt-4"
+                    style="width: 150px; height:150px">
+                    <img id="plantpic" src="" class="rounded preview" style="width: 150px; height:150px"
+                        alt="Plant Picture" />
+                    <div class="place-holder">
+                        <partial name="_Plantsvg">
+                    </div>
+                    <span class="d-flex justify-content-center mt-3 place-holder">Add image</span>
+                </label>
+                <input type="file" asp-for="PlantImage" class="picinput" accept="image/png, image/jpeg" />
+            </div>
+        </div>
+    </form>
+</div>

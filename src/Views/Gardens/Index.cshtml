@@ -1,0 +1,70 @@
+@model GardensViewModel
+
+@{
+    ViewBag.Title = "Gardens";
+    ViewBag.GetActive = new Func<string, string>(page => page == "Gardens" ? "active" : "");
+}
+
+<div class="d-flex flex-column px-3">
+    <h1 class="text-center">Gardens</h1>
+    <div class="d-flex justify-content-center">
+        <a class="mb-4" href="@Url.Action("Add", "Gardens")">Add new garden</a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <table class="table gardens">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                        Soil Type
+                    </th>
+                    <th colspan="3">
+                        # of Plants
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Gardens)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.SquareFootage)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.SoilType)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.PlantCount)
+                        </td>
+                        <td class="align-middle">
+                            <div class="invisible display-on-hover d-flex justify-content-center">
+                                <a class="btn btn-success me-2"
+                                    href="@Url.Action("Index", "Plants", new { gardenId = item.Id })">Plants</a>
+
+                                <a class="btn btn-primary me-2"
+                                    href="@Url.Action("Edit", "Gardens", new { id = item.Id })">Edit</a>
+
+                                <a class="btn btn-danger me-2"
+                                    href="@Url.Action("Delete", "Gardens", new { id = item.Id })">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

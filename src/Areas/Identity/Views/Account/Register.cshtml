@@ -1,0 +1,74 @@
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+    ViewBag.GetActive = new Func<string, string>(page => page == "Register" ? "active" : "");
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+<script type="text/javascript">
+    var fileInput = document.querySelector('.picinput');
+    fileInput.addEventListener('change', (e) => previewImage(e, 'profilepic'));
+</script>
+}
+
+<div class="d-flex flex-column w-100">
+    <h3 class="text-center mb-4">Register to begin your journey to an amazing garden</h3>
+    <div class="text-center">
+        <p><a asp-action="Login">Already have an account? Login!</a></p>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+
+    <form asp-controller="Account" method="post" asp-action="Register" class="w-100" enctype="multipart/form-data">
+        <div class="d-flex w-100 justify-content-center mt-4">
+            <div class="w-50">
+                <div class="mb-3">
+                    <label asp-for="FirstName">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+
+            <div class="d-flex flex-column align-items-center ms-4">
+                <label asp-for="ProfilePicture"
+                    class="d-flex flex-column justify-content-center align-items-center ms-3 border rounded mt-4"
+                    style="width: 150px; height:150px">
+                    <img id="profilepic" src="" class="rounded preview" style="width: 150px; height:150px"
+                        alt="Profile Picture" />
+                    <i class="bi bi-person-circle fs-4 place-holder"></i>
+                    <span class="d-flex justify-content-center mt-3 place-holder">Add photo</span>
+                </label>
+                <input type="file" asp-for="ProfilePicture" class="picinput" accept="image/png, image/jpeg" />
+            </div>
+        </div>
+    </form>
+</div>

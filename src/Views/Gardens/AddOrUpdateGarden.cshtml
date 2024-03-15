@@ -1,0 +1,42 @@
+@model GardenViewModel
+
+@{
+    ViewBag.Title = "Garden";
+    ViewBag.GetActive = new Func<string, string>(page => page == "Gardens" ? "active" : "");
+    string action = Model is null ? "Add" : "Edit";
+    string button = Model is null ? "Add Garden" : "Update Garden";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<div class="d-flex flex-column">
+    <h3 class="mb-4 mx-auto">Add A Garden and let's track its progress</h3>
+    <div class="d-flex justify-content-center">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    <form asp-controller="Gardens" asp-action="@action" method="post" class="w-50 mx-auto">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea cols="5" asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SquareFootage" class="form-label"></label>
+            <input asp-for="SquareFootage" class="form-control" />
+            <span asp-validation-for="SquareFootage" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SoilType" class="form-label"> Soil Type</label>
+            <select asp-for="SoilType" class="form-select" asp-items="Html.GetEnumSelectList<SoilType>()"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">@button</button>
+    </form>
+</div>

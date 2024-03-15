@@ -1,0 +1,24 @@
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+      ViewBag.GetActive = new Func<string, string>(page => page == "Login" ? "active" : "");
+}
+
+<div class="d-flex justify-content-center">
+    <form asp-controller="Account" asp-action="Login" method="post" class="w-50">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+</div>

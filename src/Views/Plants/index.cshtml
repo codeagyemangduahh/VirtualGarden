@@ -1,0 +1,72 @@
+@model PlantsViewModel
+
+@{
+    ViewBag.Title = "Gardens";
+    ViewBag.GetActive = new Func<string, string>(page => page == "Plants" ? "active" : "");
+}
+
+<div class="d-flex flex-column px-3">
+    <h1 class="text-center">Gardens</h1>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-success mb-4" href="@Url.Action("Add", "Plants")">Add new garden</a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <table class="table gardens">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th colspan="2">
+                        Species
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Plants)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @if (!string.IsNullOrEmpty(item.PlantImageString))
+                            {
+                                <img src="@item.PlantImageString" width="50" height="50" alt="@item.Name" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <partial name="_Plantsvg" />
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Species)
+                        </td>
+                        <td class="align-middle">
+                            <div class="invisible display-on-hover d-flex justify-content-center">
+                                <a class="btn btn-primary me-2"
+                                    href="@Url.Action("Index", "Plants", new { id = item.Id })">Add watering schedule</a>
+
+                                <a class="btn btn-primary me-2"
+                                    href="@Url.Action("Index", "Plants", new { id = item.Id })">Add fertilization
+                                    schedule</a>
+
+                                <a class="btn btn-primary me-2"
+                                    href="@Url.Action("Update", "Plants", new { id = item.Id })">Edit</a>
+
+                                <a class="btn btn-danger me-2"
+                                    href="@Url.Action("Delete", "Plants", new { id = item.Id })">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
