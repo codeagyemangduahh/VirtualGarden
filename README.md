@@ -10,16 +10,6 @@
 * Interactive plant encyclopedia with information on various plants.
 * Image upload capability for users to showcase their gardens and plants.
 
-# Installation
-
-
-*Clone the repository:
-
-*Open the file in Visual Studio.
-
-*Restore packages and dependencies.
-
-*Start the project
 
 # Technologies Used
 
